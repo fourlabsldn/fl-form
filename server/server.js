@@ -37,21 +37,13 @@ var server = (function () {
     }
 
     try {
-      file.content = fs.readFileSync('./demo/' + fileAdr);
-    } catch (e) {
-      try {
-        file.content = fs.readFileSync('./src/' + fileAdr);
-      } catch (e) {
-        file.content = 'File not found';
-      }
-    }
-
-    if (file.content) {
+      file.content = fs.readFileSync('./' + fileAdr);
       file.status = 200;
       file.mimeType = contentTypes[fileExt] || 'text/plain';
-    } else {
-      file.mimeType = 'text/plain';
+    } catch (e) {
+      file.content = 'File not found';
       file.status = 404;
+      file.mimeType = 'text/plain';
     }
 
     return file;
@@ -120,7 +112,7 @@ var server = (function () {
     start: function () {
       server.listen(PORT, function () {
         console.log('Server listening on: http://localhost:%s', PORT);
-        opener('http:localhost:' + PORT + '/index.html');
+        opener('http:localhost:' + PORT + '/demo/index.html');
       });
     },
   };
