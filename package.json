@@ -1,0 +1,19 @@
+{
+  "name": "fl-form",
+  "version": "0.0.1",
+  "description": "An encapsulated form component",
+  "main": "src/form.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "test": "echo 'Error: no test specified' && exit 1"
+  },
+  "keywords": [
+    "x-div",
+    "form"
+  ],
+  "author": "lazamar @ FourLabs",
+  "license": "ISC",
+  "devDependencies": {
+    "express": "^4.13.4"
+  }
+}
