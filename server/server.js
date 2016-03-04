@@ -57,6 +57,9 @@ var server = (function () {
   var server = express();
   server.use(bodyParser.json());
 
+  //---------------
+  // General calls
+
   server.use(/\/.+/, function (req, res, next) {
     console.log('----------------------');
     console.log('Route: ' + req.originalUrl);
@@ -78,13 +81,16 @@ var server = (function () {
     res.end(file.content);
   });
 
-  //Getting files
+  //---------------
+  // API calls
+
+  //GET
   server.get('/api/*', function (req, res) {
     console.log('API');
     res.end();
   });
 
-  //POST requests
+  //POST
   server.post('/api/*', function (req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
