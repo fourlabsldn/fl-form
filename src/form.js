@@ -1,33 +1,109 @@
 xController(function (rootEl) {
-  rootEl.style.minWidth = '50px';
-  rootEl.style.minHeight = '50px';
-  rootEl.style.backgroundColor = 'red';
+  src = rootEl.dataset.src;
 
-  rootEl.addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    var form = e.target || rootEl.querySelector('form');
-    if (!form) {
-      throw new Error('Submit event was fired without a form element.');
+  /**
+  * Insert content into a container
+  * @function render
+   * @param  {String} content
+   * @param  {HTMLElement} container
+   * @return {void}
+   */
+  function render(content, container) {
+    if (!container) {
+      console.error('render(): No container provided');
+      return;
     }
 
-    var target = '/api/' + form.getAttribute('action') || '/api/test';
+    container.innerHTML = content;
+  }
 
-    var config = {};
-    config.method = form.getAttribute('method') || 'POST';
+  /**
+   * Sends the content of a form to a url endpoint
+   * @function sendForm
+   * @param  {String} url
+   * @param  {HTMLElement} form
+   * @return {Promise}      will resolve with the content of the response.
+   */
+  function sendForm(url, form) {
+    if (typeof url !== 'string') {
+      throw Error('sendForm: Invalid url parameter.');
+    } else if (!form || form.tagName !== 'FORM') {
+      throw Error('sendForm: Form parameter invalid.');
+    }
+
+    var target = form.getAttribute('action');
+
+    //------------ TEST CODE ------------------//
+    target = '/api/' + (target || ''); //jscs ignore:line
+    //-------- END OF TEST CODE ---------------//
+
+
+    var config = {
+      method: form.getAttribute('method') || 'GET',
+      mode: 'cors',
+      cache: 'default',
+    };
+
     if (config.method.toUpperCase() === 'POST') {
       config.body = new FormData(form);
     }
 
-    fetch(target, config)
-    .then(function (response) {
-      response.json();
+    return fetch(target, config)
+      .then(function (response) {
+        response.json();
+      })
+      .then(function (text) {
+      return  console.log(text);
+      })
+      .catch(function (err) {
+        console.error('sendForm: Error submitting form:' + err);
+        return Promise.reject(err);
+      });
+  }
+
+  /**
+   * Loads an html content fetched from a url into a target element.
+   * @function load
+   * @param  {String} url    [description]
+   * @param  {HTMLElement} target [description]
+   * @return {void}        [description]
+   */
+  function load(url, target) {
+
+    // get content
+    fetch(url, { method: 'GET' })
+    .then(function (res) {
+
+      //add it to the target element.
+      return res.text();
     })
-    .then(function (text) {
-      console.log(text);
+    .then(function (res) {
+      render(res, target);
     })
-    .catch(function (err) {
-      console.error('Error submitting form:' + err);
+    .catch(function () {
+      console.err('load(): Error fetching URL.');
     });
-  }, true);
+  }
+
+  //Set event listeners
+  function init(el) {
+    var contentUrl = el.dataset.content;
+    if (!el.dataset.content) {
+      console.error('init(): No content parameter found.');
+      return;
+    }
+
+    load(contentUrl, el);
+
+    el.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      var form = e.target;
+      if (container.tagName !== 'FORM') {
+        throw new Error('Submit event was fired without a form element.');
+      }
+    }, true);
+  }
+
+  init(rootEl);
 });
