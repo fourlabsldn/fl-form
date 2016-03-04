@@ -2,6 +2,7 @@
 
 //TODO: get Polyfills for all dependencies
 xController(function (rootEl) {
+  var config;
 
   /**
    * @function getText
@@ -32,7 +33,7 @@ xController(function (rootEl) {
    * @function sendForm
    * @param  {String} url
    * @param  {HTMLElement} form
-   * @return {Promise}      will resolve with the content of the response.
+   * @return {Promise}      will resolve with the text content of the response.
    */
   function sendForm(url, form) {
     if (typeof url !== 'string') {
@@ -77,7 +78,7 @@ xController(function (rootEl) {
   function load(url, target) {
 
     // get content
-    fetch(url, { method: 'GET' })
+    return fetch(url, { method: 'GET' })
     .then(getText)
     .then(function (res) {
       render(res, target);
@@ -90,12 +91,19 @@ xController(function (rootEl) {
   //Set event listeners
   function init(el) {
     var contentUrl = el.dataset.content;
+    config = el.dataset.config || {};
+
     if (!el.dataset.content) {
       console.error('init(): No content parameter found.');
       return;
     }
 
-    load(contentUrl, el);
+    load(contentUrl, el)
+    .then(function () {
+      if (config.onLoad) {
+        config.onLoad();
+      }
+    });
 
     el.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -108,7 +116,11 @@ xController(function (rootEl) {
       sendForm(form.getAttribute('action'), form)
       .then(function (text) {
         render(text, el);
+        if (config.onResponse) {
+          config.onResponse(text);
+        }
       });
+
     }, true);
   }
 
