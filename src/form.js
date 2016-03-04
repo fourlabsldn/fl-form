@@ -4,6 +4,14 @@
 xController(function (rootEl) {
 
   /**
+   * @function getText
+   * @param  {Response Object} res [https://developer.mozilla.org/en-US/docs/Web/API/Response]
+   * @return {String}
+   */
+  function getText(res) {
+    return res.text();
+  }
+  /**
   * Insert content into a container
   * @function render
    * @param  {String} content
@@ -43,6 +51,8 @@ xController(function (rootEl) {
 
     var config = {
       method: form.getAttribute('method') || 'GET',
+      mode: 'cors',
+      cache: 'default',
     };
 
     if (config.method.toUpperCase() === 'POST') {
@@ -50,12 +60,7 @@ xController(function (rootEl) {
     }
 
     return fetch(target, config)
-      .then(function (response) {
-        return response.text();
-      })
-      .then(function (text) {
-        return console.log(text);
-      })
+      .then(getText)
       .catch(function (err) {
         console.error('sendForm: Error submitting form:' + err);
         return Promise.reject(err);
@@ -73,13 +78,9 @@ xController(function (rootEl) {
 
     // get content
     fetch(url, { method: 'GET' })
+    .then(getText)
     .then(function (res) {
-
-      //add it to the target element.
-      return res.text();
-    })
-    .then(function (res) {
-      return render(res, target);
+      render(res, target);
     })
     .catch(function () {
       console.err('load(): Error fetching URL.');
@@ -104,7 +105,10 @@ xController(function (rootEl) {
         throw new Error('Submit event was fired without a form element.');
       }
 
-      sendForm(form.getAttribute('action'), form);
+      sendForm(form.getAttribute('action'), form)
+      .then(function (text) {
+        render(text, el);
+      });
     }, true);
   }
 
