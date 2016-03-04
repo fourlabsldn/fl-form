@@ -11,7 +11,7 @@
     "form"
   ],
   "moduleType": [],
-  "homepage": "",
+  "homepage": "https://github.com/fourlabsldn/fl-form",
   "ignore": [
     "**/.*",
     "node_modules",

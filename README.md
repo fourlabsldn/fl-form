@@ -23,6 +23,16 @@ The `data-options` attribute is optional.
 
 ## Installation
 
+**bower**
+
+```
+bower install fl-form --save
+```
+
+**npm**
+```
+npm install fl-form --save
+```
 **Download**
 
 Just copy the `src/fl-form.js` file, and get [this](https://raw.githubusercontent.com/fourlabsldn/x-div/master/js/x-div.js) one as a dependency. Done.
