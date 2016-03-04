@@ -4,6 +4,8 @@
 xController(function (rootEl) {
   var config;
 
+  require('moment');
+
   /**
    * @function getText
    * @param  {Response Object} res [https://developer.mozilla.org/en-US/docs/Web/API/Response]
@@ -43,12 +45,6 @@ xController(function (rootEl) {
     }
 
     var target = form.getAttribute('action');
-
-    //------------ TEST CODE ------------------//
-
-    // target = '/api/' + (target || ''); //jscs ignore:line
-
-    //-------- END OF TEST CODE ---------------//
 
     var config = {
       method: form.getAttribute('method') || 'GET',
