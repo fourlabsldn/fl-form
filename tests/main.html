@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Form Test</title>
+  <link rel="stylesheet" href="../node_modules/jasmine-core/lib/jasmine-core/jasmine.css">
+</head>
+<body>
+  <!-- Jasmine code -->
+  <script src="../node_modules/jasmine-core/lib/jasmine-core/jasmine.js"></script>
+  <script src="../node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js"></script>
+  <script src="../node_modules/jasmine-core/lib/jasmine-core/boot.js"></script>
+  <script src="../node_modules/jasmine-ajax/lib/mock-ajax.js"></script>
+
+  <!-- dependencies -->
+  <script src="../bower_components/x-div/js/x-div.js"></script>
+  <!-- As jasmine.Ajax does not intercept calls from the 'fetch' object, only
+  XmlHttpRequests, then let's substitute fetch for a polyfill that uses xhr. -->
+  <script src="fetch_mock.js"></script>
+
+  <!-- test file -->
+  <script src="form_spec.js"></script>
+
+
+</body>
+</html>

@@ -16,6 +16,8 @@
   "devDependencies": {
     "body-parser": "^1.15.0",
     "bower": "^1.7.7",
-    "express": "^4.13.4"
+    "express": "^4.13.4",
+    "grunt": "^0.4.5",
+    "jasmine-ajax": "^3.2.0"
   }
 }
