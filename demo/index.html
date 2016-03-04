@@ -3,9 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <title>DEMO - fl-form</title>
+  <style>
+    x-div{
+      display: block;
+    }
+  </style>
 </head>
 <body>
-  <x-div data-controller="/src/form"></x-div>
+  <x-div name='form' data-controller="/src/form">
+    <form action="somewhere" method="POST" >
+      <input type="text" name="name">
+      <input type="text" name="surname">
+      <input type="text" name="address">
+      <input type="submit" name="submit">
+    </form>
+  </x-div>
   <script src="/bower_components/x-div/js/x-div.js"></script>
 </body>
 </html>

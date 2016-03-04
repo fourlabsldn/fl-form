@@ -1,0 +1,25 @@
+{
+  "name": "fl-form",
+  "description": "An encapsulated form component",
+  "main": "src/form.js",
+  "authors": [
+    "lazamar @ FourLabs"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "x-div",
+    "form"
+  ],
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "x-div": "~1.0.2"
+  }
+}

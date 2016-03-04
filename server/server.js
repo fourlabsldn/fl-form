@@ -33,6 +33,7 @@ var server = (function () {
     if (!fileAdr) {
       file.content = 'Bad request. No file extention.';
       file.status = 400;
+      file.mimeType = 'text/plain';
       return file;
     }
 
@@ -60,15 +61,16 @@ var server = (function () {
     console.log('----------------------');
     console.log('Route: ' + req.originalUrl);
 
-    //Allow CORS
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-
     //Redirect api calls
     if (/^\/api\//.test(req.originalUrl)) {
+      console.log('Redirecting to api');
       next();
       return;
     }
+
+    //Allow CORS
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 
     // Return a file
     var file = getFile(req.originalUrl);
@@ -83,23 +85,23 @@ var server = (function () {
   });
 
   //POST requests
-  server.post('/bookings', function (req, res) {
+  server.post('/api/*', function (req, res) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+
     var jsonstring = '';
     req.on('data', function (data) {
       jsonstring += data;
     });
 
     req.on('end', function () {
-      console.log('Bookings parameters:');
-      console.log(JSON.parse(jsonstring));
+      // var reqContent = JSON.parse(jsonstring);
+      res.writeHead(200, { 'Content-Type': contentTypes.json });
+      res.end(jsonstring);
+      console.log('Just echoed:');
+      console.dir(jsonstring);
+      console.log(req.body);
     });
-
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    res.writeHead(200, {
-      'Content-Type': 'application/javascript',
-    });
-    reandAndRespond('createBooking.json', res);
   });
 
   return {
