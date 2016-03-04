@@ -71,14 +71,8 @@ var server = (function () {
       return;
     }
 
-    //Allow CORS
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-
-    // Return a file
-    var file = getFile(req.originalUrl);
-    res.writeHead(file.status, { 'Content-Type': file.mimeType });
-    res.end(file.content);
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Invalid, not an API call.');
   });
 
   //---------------
@@ -102,11 +96,11 @@ var server = (function () {
 
     req.on('end', function () {
       // var reqContent = JSON.parse(jsonstring);
-      res.writeHead(200, { 'Content-Type': contentTypes.json });
-      res.end(jsonstring);
+      res.writeHead(200, { 'Content-Type': contentTypes.html });
       console.log('Just echoed:');
       console.dir(jsonstring);
       console.log(req.body);
+      res.end(jsonstring);
     });
   });
 

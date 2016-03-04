@@ -1,5 +1,7 @@
+/*globals FormData,  fetch, xController, Promise*/
+
+//TODO: get Polyfills for all dependencies
 xController(function (rootEl) {
-  src = rootEl.dataset.src;
 
   /**
   * Insert content into a container
@@ -34,14 +36,13 @@ xController(function (rootEl) {
     var target = form.getAttribute('action');
 
     //------------ TEST CODE ------------------//
-    target = '/api/' + (target || ''); //jscs ignore:line
-    //-------- END OF TEST CODE ---------------//
 
+    // target = '/api/' + (target || ''); //jscs ignore:line
+
+    //-------- END OF TEST CODE ---------------//
 
     var config = {
       method: form.getAttribute('method') || 'GET',
-      mode: 'cors',
-      cache: 'default',
     };
 
     if (config.method.toUpperCase() === 'POST') {
@@ -50,10 +51,10 @@ xController(function (rootEl) {
 
     return fetch(target, config)
       .then(function (response) {
-        response.json();
+        return response.text();
       })
       .then(function (text) {
-      return  console.log(text);
+        return console.log(text);
       })
       .catch(function (err) {
         console.error('sendForm: Error submitting form:' + err);
@@ -78,7 +79,7 @@ xController(function (rootEl) {
       return res.text();
     })
     .then(function (res) {
-      render(res, target);
+      return render(res, target);
     })
     .catch(function () {
       console.err('load(): Error fetching URL.');
@@ -99,9 +100,11 @@ xController(function (rootEl) {
       e.preventDefault();
 
       var form = e.target;
-      if (container.tagName !== 'FORM') {
+      if (form.tagName !== 'FORM') {
         throw new Error('Submit event was fired without a form element.');
       }
+
+      sendForm(form.getAttribute('action'), form);
     }, true);
   }
 

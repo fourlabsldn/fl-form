@@ -4,7 +4,7 @@
   "description": "An encapsulated form component",
   "main": "src/form.js",
   "scripts": {
-    "start": "node server/server.js",
+    "start": "httpserver 5000 && node server/server.js",
     "test": "echo 'Error: no test specified' && exit 1"
   },
   "keywords": [
