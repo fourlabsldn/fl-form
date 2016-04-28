@@ -4,8 +4,8 @@
 
 ``` html
   <x-div
-    data-controller="path/to/fl-form"
-    data-content="path/to/form.html"
+    data-controller="path/to/fl-form/src"
+    data-content="path/to/your-form.html"
     data-options="optionsObj">
   </x-div>
 
