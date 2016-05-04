@@ -16,6 +16,7 @@
   <script src="../bower_components/x-div/js/x-div.js"></script>
   <!-- As jasmine.Ajax does not intercept calls from the 'fetch' object, only
   XmlHttpRequests, then let's substitute fetch for a polyfill that uses xhr. -->
+  <script>window.fetch = undefined;</script>
   <script src="fetch_mock.js"></script>
 
   <!-- test file -->

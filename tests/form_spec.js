@@ -1,4 +1,5 @@
 /*global describe, it, expect, Exposer*/
+
 describe('An fl-form should', function () {
   var formResponses = {
     success: {
@@ -34,7 +35,7 @@ describe('An fl-form should', function () {
     console.log(request.url);
     expect(request.url).toBe('http://localhost/test');
     expect(request.method).toBe('GET');
-    
+
     req.then(function () {
       expect(onSuccess).toHaveBeenCalled();
       var onSuccessArgs = onSuccess.calls.mostRecent().args[0];

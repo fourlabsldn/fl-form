@@ -11,7 +11,13 @@
   </style>
 </head>
 <body>
-  <x-div name='form' data-controller="/src/fl-form" data-content="/demo/form.html">
+  <x-div name='form' data-controller="/src/fl-form">
+    <form action="http://localhost:5000/demo/form2.html" method="GET" >
+      <input type="text" name="name">
+      <input type="text" name="surname">
+      <input type="text" name="address">
+      <input type="submit" name="submit">
+    </form>
   </x-div>
   <img src="https://placehold.it/500x500" alt="">
   <script src="/bower_components/x-div/js/x-div.js"></script>

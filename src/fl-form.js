@@ -4,8 +4,6 @@
 xController(function (rootEl) {
   var config;
 
-  require('moment');
-
   /**
    * @function getText
    * @param  {Response Object} res [https://developer.mozilla.org/en-US/docs/Web/API/Response]
@@ -86,20 +84,7 @@ xController(function (rootEl) {
 
   //Set event listeners
   function init(el) {
-    var contentUrl = el.dataset.content;
     config = el.dataset.config || {};
-
-    if (!el.dataset.content) {
-      console.error('init(): No content parameter found.');
-      return;
-    }
-
-    load(contentUrl, el)
-    .then(function () {
-      if (config.onLoad) {
-        config.onLoad();
-      }
-    });
 
     el.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -118,6 +103,10 @@ xController(function (rootEl) {
       });
 
     }, true);
+
+    if (typeof config.onload === 'function') {
+      config.onLoad();
+    }
   }
 
   init(rootEl);
