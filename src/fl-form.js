@@ -59,7 +59,8 @@ xController(function (rootEl) {
       .catch(function (err) {
         console.error('sendForm: Error submitting form:' + err);
         return Promise.reject(err);
-      });
+      })
+    ;
   }
 
   /**
@@ -73,13 +74,14 @@ xController(function (rootEl) {
 
     // get content
     return fetch(url, { method: 'GET' })
-    .then(getText)
-    .then(function (res) {
-      render(res, target);
-    })
-    .catch(function () {
-      console.err('load(): Error fetching URL.');
-    });
+      .then(getText)
+      .then(function (res) {
+        render(res, target);
+      })
+      .catch(function () {
+        console.err('load(): Error fetching URL.');
+      })
+    ;
   }
 
   //Set event listeners
@@ -95,12 +97,13 @@ xController(function (rootEl) {
       }
 
       sendForm(form.getAttribute('action'), form)
-      .then(function (text) {
-        render(text, el);
-        if (config.onResponse) {
-          config.onResponse(text);
-        }
-      });
+        .then(function (text) {
+          render(text, el);
+          if (config.onResponse) {
+            config.onResponse(text);
+          }
+        })
+      ;
 
     }, true);
 
