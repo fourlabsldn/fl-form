@@ -2,6 +2,11 @@
 
 //TODO: get Polyfills for all dependencies
 xController(function (rootEl) {
+  var configDefaults = {
+    onLoad: null,
+    onResponse: null,
+    credentials: 'omit',
+  };
   var config;
 
   /**
@@ -12,6 +17,27 @@ xController(function (rootEl) {
   function getText(res) {
     return res.text();
   }
+
+  /**
+   * Overwrites obj1's values with obj2's and adds obj2's if non existent in obj1
+   * @param obj1
+   * @param obj2
+   * @returns {Object} a new object based on obj1 and obj2
+   */
+  function mergeOptions(obj1, obj2) {
+    var obj3 = {};
+
+    for (var attrname in obj1) {
+      obj3[attrname] = obj1[attrname];
+    }
+
+    for (var attrname in obj2) {
+      obj3[attrname] = obj2[attrname];
+    }
+
+    return obj3;
+  }
+
   /**
   * Insert content into a container
   * @function render
@@ -44,17 +70,18 @@ xController(function (rootEl) {
 
     var target = form.getAttribute('action');
 
-    var config = {
+    var fetchOptions = {
       method: form.getAttribute('method') || 'GET',
-      mode: 'cors',
+      mode: config.credentials === 'omit' ? 'cors' : 'same-origin',
+      credentials: config.credentials,
       cache: 'default',
     };
 
-    if (config.method.toUpperCase() === 'POST') {
-      config.body = new FormData(form);
+    if (fetchOptions.method.toUpperCase() === 'POST') {
+      fetchOptions.body = new FormData(form);
     }
 
-    return fetch(target, config)
+    return fetch(target, fetchOptions)
       .then(getText)
       .catch(function (err) {
         console.error('sendForm: Error submitting form:' + err);
@@ -84,9 +111,18 @@ xController(function (rootEl) {
     ;
   }
 
-  //Set event listeners
+  //Set event listeners and merge config
   function init(el) {
-    config = el.dataset.config || {};
+    // Grab optional config object
+    let configOverride = window[el.dataset.config];
+    if (typeof config !== 'object') {
+      configOverride = {};
+    }
+    config = mergeOptions(configDefaults, configOverride);
+
+    if(['omit', 'same-origin'].indexOf(config.credentials) === -1) {
+      throw new Error('Invalid value for credentials');
+    }
 
     el.addEventListener('submit', function (e) {
       e.preventDefault();

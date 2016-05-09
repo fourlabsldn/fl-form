@@ -5,11 +5,11 @@
 ``` html
   <x-div
     data-controller="path/to/fl-form"
-    data-options="optionsObj">
+    data-config="flFormConfigObj">
   </x-div>
 
   <script>
-    var optionsObj = {
+    var flFormConfigObj = {
       onLoad: function () {}, //Called when it is loaded for the first time
       onResponse: function (responseText) {}, //Called whenever a response from a submit event arrives.
     }
@@ -18,7 +18,7 @@
 
 Run **npm start** to see the demo in action.
 
-The `data-options` attribute is optional.
+The `data-config` attribute is optional.
 
 ## Installation
 
