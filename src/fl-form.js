@@ -115,7 +115,7 @@ xController(function (rootEl) {
   function init(el) {
     // Grab optional config object
     let configOverride = window[el.dataset.config];
-    if (typeof config !== 'object') {
+    if (typeof configOverride !== 'object') {
       configOverride = {};
     }
     config = mergeOptions(configDefaults, configOverride);
