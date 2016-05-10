@@ -5,6 +5,7 @@
   "main": "src/form.js",
   "scripts": {
     "start": "grunt dev",
+    "demo": "grunt demo",
     "test": "echo 'Error: no test specified' && exit 1"
   },
   "keywords": [
