@@ -3,8 +3,8 @@
 //TODO: get Polyfills for all dependencies
 xController(function (rootEl) {
   var configDefaults = {
-    onLoad: null,
-    onResponse: null,
+    onLoad: function () {},
+    onResponse: function () {},
     credentials: 'omit',
   };
   var config;
@@ -125,26 +125,20 @@ xController(function (rootEl) {
         .then(function (response) {
 
           if(typeof response === 'object') {
-            var text = response.text();
-            var status = response.status;
+            response.text().then((html) => {
+              render(html, el)
+              config.onResponse(html, response.status);
+            });
           } else {
-            var text = response;
-            var status = null;
-          }
-          console.log(typeof response, text);
-
-          render(text, el);
-          if (typeof config.onResponse === 'function') {
-            config.onResponse(text, status);
+            render(text, el);
+            config.onResponse(text, response.status);
           }
         })
       ;
 
     }, true);
 
-    if (typeof config.onload === 'function') {
-      config.onLoad();
-    }
+    config.onLoad();
   }
 
   init(rootEl);
