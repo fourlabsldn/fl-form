@@ -19,6 +19,15 @@ xController(function (rootEl) {
   }
 
   /**
+   * @function getStatusCode
+   * @param  {Response Object} res [https://developer.mozilla.org/en-US/docs/Web/API/Response]
+   * @return {int}
+   */
+  function getStatusCode(res) {
+    return res.status;
+  }
+
+  /**
    * Overwrites obj1's values with obj2's and adds obj2's if non existent in obj1
    * @param obj1
    * @param obj2
@@ -82,7 +91,7 @@ xController(function (rootEl) {
     }
 
     return fetch(target, fetchOptions)
-      .then(getText)
+      .then(getText, getStatusCode)
       .catch(function (err) {
         console.error('sendForm: Error submitting form:' + err);
         return Promise.reject(err);
@@ -133,10 +142,10 @@ xController(function (rootEl) {
       }
 
       sendForm(form.getAttribute('action'), form)
-        .then(function (text) {
+        .then(function (text, status) {
           render(text, el);
-          if (config.onResponse) {
-            config.onResponse(text);
+          if (typeof config.onResponse === 'function') {
+            config.onResponse(text, status);
           }
         })
       ;
