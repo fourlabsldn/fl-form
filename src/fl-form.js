@@ -10,24 +10,6 @@ xController(function (rootEl) {
   var config;
 
   /**
-   * @function getText
-   * @param  {Response Object} res [https://developer.mozilla.org/en-US/docs/Web/API/Response]
-   * @return {String}
-   */
-  function getText(res) {
-    return res.text();
-  }
-
-  /**
-   * @function getStatusCode
-   * @param  {Response Object} res [https://developer.mozilla.org/en-US/docs/Web/API/Response]
-   * @return {int}
-   */
-  function getStatusCode(res) {
-    return res.status;
-  }
-
-  /**
    * Overwrites obj1's values with obj2's and adds obj2's if non existent in obj1
    * @param obj1
    * @param obj2
@@ -91,7 +73,6 @@ xController(function (rootEl) {
     }
 
     return fetch(target, fetchOptions)
-      .then(getText, getStatusCode)
       .catch(function (err) {
         console.error('sendForm: Error submitting form:' + err);
         return Promise.reject(err);
@@ -110,9 +91,8 @@ xController(function (rootEl) {
 
     // get content
     return fetch(url, { method: 'GET' })
-      .then(getText)
-      .then(function (res) {
-        render(res, target);
+      .then(function (response) {
+        render(response.text(), target);
       })
       .catch(function () {
         console.err('load(): Error fetching URL.');
@@ -142,7 +122,17 @@ xController(function (rootEl) {
       }
 
       sendForm(form.getAttribute('action'), form)
-        .then(function (text, status) {
+        .then(function (response) {
+
+          if(typeof response === 'object') {
+            var text = response.text();
+            var status = response.status;
+          } else {
+            var text = response;
+            var status = null;
+          }
+          console.log(typeof response, text);
+
           render(text, el);
           if (typeof config.onResponse === 'function') {
             config.onResponse(text, status);
