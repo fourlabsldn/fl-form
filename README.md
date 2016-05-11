@@ -21,6 +21,16 @@ Run **npm start** to see the demo in action.
 
 The `data-config` attribute is optional.
 
+## Developing
+### Dev with livereload
+```
+npm start dev
+```
+
+### Demo with livereload
+```
+npm start demo
+```
 ## Installation
 
 **bower**
