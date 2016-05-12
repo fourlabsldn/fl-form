@@ -23,6 +23,8 @@
     "grunt-open": "^0.2.3",
     "httpserver": "^0.2.0",
     "jasmine-ajax": "^3.2.0"
+  },
+  "dependencies": {
+    "x-div": "^1.0.43"
   }
 }
-

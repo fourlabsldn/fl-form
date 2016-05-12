@@ -4,13 +4,59 @@
   <meta charset="UTF-8">
   <title>DEMO - fl-form</title>
   <style>
+    body {
+      display: flex;
+      flex-flow: row wrap;
+      font-family: sans-serif;
+    }
+
+    * {
+      max-width: 100%;
+    }
+
+    h1 {
+      width: 100%;
+    }
+    div,
     x-div{
       display: block;
-      background-color: red;
+      min-height: 100px;
+      max-width: 150px;
+      background-color: #fafafa;
+      border: 1px solid #eee;
+      margin: 1em;
+      padding: 1em;
     }
+
+    .unrelated {
+      opacity: 70%;
+    }
+
   </style>
 </head>
 <body>
+  <script>
+    var config1 = {
+      onLoad: function (xdiv) {
+        xdiv.innerHTML += '<p>Appended content! :) </p>';
+      }, // Called when it is loaded for the first time
+      onResponse: function (text, statusCode) {}, // Called whenever a response from a submit event arrives
+    }
+  </script>
+
+  <h1>fl-form test</h1>
+  <x-div name='form' data-controller="/src/fl-form" data-config="config1">
+    <p>Form with content loaded via onLoad event. There should be more content here >></p>
+  </x-div>
+
+  <x-div name='form' data-controller="/src/fl-form">
+    <p>Form without a response</p>
+  </x-div>
+
+  <x-div name='form' data-controller="/src/fl-form">
+    <p>Form without a config</p>
+  </x-div>
+
   <x-div name='form' data-controller="/src/fl-form">
     <form action="http://localhost:5000/demo/form2.html" method="GET" >
       <input type="text" name="name">
@@ -19,8 +65,16 @@
       <input type="submit" name="submit">
     </form>
   </x-div>
-  <img src="https://placehold.it/500x500" alt="">
-  <script src="../bower_components/x-div/js/x-div.js"></script>
+
+  <div class="unrelated">
+    Unrelated content that should not be taken from the page.
+  </div>
+
+  <div>
+    Unrelated content that should not be taken from the page.
+    <img src="https://placehold.it/200x200" alt="">
+  </div>
+  <script src="../node_modules/x-div/dist/x-div.js"></script>
 
   <!-- livereload -->
   <script src="//localhost:35729/livereload.js"></script>
