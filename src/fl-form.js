@@ -138,7 +138,7 @@ xController(function (rootEl) {
 
     }, true);
 
-    config.onLoad();
+    config.onLoad(el);
   }
 
   init(rootEl);
