@@ -11,7 +11,7 @@
   <script>
     var flFormConfigObj = {
       onLoad: function (xdiv) {}, // Called when it is loaded for the first time
-      onResponse: function (text, statusCode) {}, // Called whenever a response from a submit event arrives
+      onResponse: function (text, statusCode, xdiv) {}, // Called whenever a response from a submit event arrives
       credentials: false, //If set to true, credentials are sent with fetch request
     }
   </script>

@@ -127,11 +127,11 @@ xController(function (rootEl) {
           if(typeof response === 'object') {
             response.text().then((html) => {
               render(html, el)
-              config.onResponse(html, response.status);
+              config.onResponse(html, response.status, el);
             });
           } else {
             render(text, el);
-            config.onResponse(text, response.status);
+            config.onResponse(text, response.status, el);
           }
         })
       ;

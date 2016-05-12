@@ -29,7 +29,7 @@
     }
 
     .unrelated {
-      opacity: 70%;
+      background-color: #ffffcc;
     }
 
   </style>
@@ -40,17 +40,27 @@
       onLoad: function (xdiv) {
         xdiv.innerHTML += '<p>Appended content! :) </p>';
       }, // Called when it is loaded for the first time
-      onResponse: function (text, statusCode) {}, // Called whenever a response from a submit event arrives
+      onResponse: function (text, statusCode, xdiv) {
+        xdiv.innerHTML += '<p>Moar content! this time appended to the request\'s response!</p>';
+      }, // Called whenever a response from a submit event arrives
     }
+
+    var config2 = {};
   </script>
 
   <h1>fl-form test</h1>
   <x-div name='form' data-controller="/src/fl-form" data-config="config1">
+    <form action="dummyContent1.html">
+      <button>Load something else</button>
+    </form>
     <p>Form with content loaded via onLoad event. There should be more content here >></p>
   </x-div>
 
-  <x-div name='form' data-controller="/src/fl-form">
-    <p>Form without a response</p>
+  <x-div name='form' data-controller="/src/fl-form" data-config="config2">
+    <form>
+      <button>Load something</button>
+    </form>
+    <p>Form without a target</p>
   </x-div>
 
   <x-div name='form' data-controller="/src/fl-form">
@@ -58,6 +68,8 @@
   </x-div>
 
   <x-div name='form' data-controller="/src/fl-form">
+    <p>Form with a deep links</p>
+
     <form action="http://localhost:5000/demo/form2.html" method="GET" >
       <input type="text" name="name">
       <input type="text" name="surname">
@@ -70,7 +82,7 @@
     Unrelated content that should not be taken from the page.
   </div>
 
-  <div>
+  <div class="unrelated">
     Unrelated content that should not be taken from the page.
     <img src="https://placehold.it/200x200" alt="">
   </div>
