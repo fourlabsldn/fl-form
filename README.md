@@ -1,4 +1,8 @@
 # fl-form
+## Goals of fl-form
+- Send a form and receive response without reloading the page.
+- Be able to intercept a form submission.
+- Be able to intercept a response from a form submission.
 
 ## Usage
 
@@ -12,7 +16,7 @@
     var flFormConfigObj = {
       onLoad: function (xdiv) {}, // Called when it is loaded for the first time
       onResponse: function (text, statusCode, xdiv) {}, // Called whenever a response from a submit event arrives
-      credentials: false, //If set to true, credentials are sent with fetch request
+      credentials: false, //If set to true, credentials (cookies) are sent with fetch request
     }
   </script>
 ```

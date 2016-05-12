@@ -25,6 +25,7 @@
     "jasmine-ajax": "^3.2.0"
   },
   "dependencies": {
+    "fl-assert": "^1.0.0",
     "x-div": "^1.0.43"
   }
 }
