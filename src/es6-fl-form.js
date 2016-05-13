@@ -2,12 +2,6 @@
 
 import assert from '../node_modules/fl-assert/dist/assert.js';
 
-xController((xdiv) => {
-  assert(xdiv && xdiv.nodeName, 'Invalid x-div element given.');
-  const config = xdiv.dataset.config;
-  const flForm = new FlForm(xdiv, config); // eslint-disable-line no-unused-vars
-});
-
 class FlForm {
   constructor(xdiv, config = {}) {
     assert(xdiv && xdiv.nodeName, 'No x-div element provided.');
@@ -36,7 +30,7 @@ class FlForm {
     assert(form.tagName === 'FORM', 'Submit event was fired without a form element.');
 
     const url = form.getAttribute('action');
-    if (!url) { return Promise.resolve(null); }
+    if (!url) { return Promise.reject('No target url in form.'); }
 
     // Prepare request options
     const method = form.getAttribute('method') || 'GET';
@@ -49,6 +43,7 @@ class FlForm {
       credentials: config.credentials,
     };
 
+    // Send request
     return fetch(url, fetchOptions);
   }
 
@@ -56,9 +51,11 @@ class FlForm {
     // If we have a response object rather than plain text,
     // then come back when we have plain text.
     if (response instanceof Response) {
-      response.text().then(text => {
-        this.processFormResponse(text, response.status);
-      });
+      response.text()
+        .then(text => {
+          this.processFormResponse(text, response.status);
+        });
+      return;
     }
 
     // Render to the DOM
@@ -72,11 +69,11 @@ class FlForm {
     assert(typeof config === 'object', 'Invalid configuration object');
 
     this.config.onLoad = (typeof config.onLoad !== 'function')
-      ? () => true
+      ? () => null
       : this.config.onLoad;
 
     this.config.onResponse = (typeof config.onResponse !== 'function')
-      ? () => true
+      ? () => null
       : this.config.onResponse;
 
     this.config.credentials = config.credentials ? 'include' : '';
@@ -91,7 +88,8 @@ class FlForm {
       // Now we just submit and process the reponse
       const form = e.target;
       this.submitForm(form)
-        .then(res => this.processFormResponse(res));
+        .then(res => this.processFormResponse(res))
+        .catch(err => assert.warn(false, err));
     });
   }
 
@@ -99,3 +97,10 @@ class FlForm {
     xdiv.innerHTML = content;
   }
 }
+
+xController((xdiv) => {
+  assert(xdiv && xdiv.nodeName, 'Invalid x-div element given.');
+  const configGlobalName = xdiv.dataset.config;
+  const config = window[configGlobalName];
+  const flForm = new FlForm(xdiv, config); // eslint-disable-line no-unused-vars
+});
