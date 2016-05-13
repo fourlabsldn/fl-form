@@ -1,8 +1,6 @@
-/* globals xController */
-
 import assert from '../node_modules/fl-assert/dist/assert.js';
 
-class FlForm {
+export default class FlForm {
   constructor(xdiv, config = {}) {
     assert(xdiv && xdiv.nodeName, 'No x-div element provided.');
     this.xdiv = xdiv;
@@ -97,10 +95,3 @@ class FlForm {
     xdiv.innerHTML = content;
   }
 }
-
-xController((xdiv) => {
-  assert(xdiv && xdiv.nodeName, 'Invalid x-div element given.');
-  const configGlobalName = xdiv.dataset.config;
-  const config = window[configGlobalName];
-  const flForm = new FlForm(xdiv, config); // eslint-disable-line no-unused-vars
-});

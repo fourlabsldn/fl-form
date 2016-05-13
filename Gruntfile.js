@@ -29,7 +29,7 @@ module.exports = function (grunt) {
     watch: {
       js: {
         files: 'src/**/*.js',
-        tasks: [],
+        tasks: ['rollup'],
         options: {
           livereload: true,
         },
@@ -54,8 +54,8 @@ module.exports = function (grunt) {
         },
       },
       main: {
-        dest: 'dist/es6-fl-form.js',
-        src: 'src/es6-fl-form.js', // Only one source file is permitted
+        src: 'src/controller.js', // Only one source file is permitted
+        dest: 'dist/fl-form.js',
       },
     },
   });

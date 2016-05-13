@@ -1,3 +1,13 @@
+// ============================================================================
+//
+//
+//    This file is deprecated.
+//    The new version uses ES6 and is in the dist folder.
+//
+//
+// ============================================================================
+
+
 /*globals FormData,  fetch, xController, Promise*/
 
 //TODO: get Polyfills for all dependencies

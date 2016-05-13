@@ -2,7 +2,7 @@
   "name": "fl-form",
   "version": "0.0.6",
   "description": "An encapsulated form component",
-  "main": "src/form.js",
+  "main": "dist/fl-form.js",
   "scripts": {
     "start": "grunt dev",
     "demo": "grunt demo",
