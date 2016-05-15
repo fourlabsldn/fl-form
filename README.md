@@ -9,11 +9,11 @@
 ``` html
   <x-div
     data-controller="path/to/fl-form"
-    data-config="flFormConfigObj">
+    data-config="flFormConfig">
   </x-div>
 
   <script>
-    var flFormConfigObj = {
+    var flFormConfig = {
       onLoad: function (xdiv) {}, // Called when it is loaded for the first time
       onResponse: function (text, statusCode, xdiv) {}, // Called whenever a response from a submit event arrives
       credentials: false, //If set to true, credentials (cookies) are sent with fetch request
