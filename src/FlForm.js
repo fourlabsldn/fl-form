@@ -33,9 +33,12 @@ export default class FlForm {
     // Prepare request options
     const method = form.getAttribute('method') || 'GET';
     const body = method.toUpperCase() === 'POST' ? new FormData(form) : undefined;
+    const headers = new Headers({ 'X-Requested-With': 'fetch' });
+
     const fetchOptions = {
       method,
       body,
+      headers,
       cache: 'default',
       mode: config.mode,
       credentials: config.credentials,
