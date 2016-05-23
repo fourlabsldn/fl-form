@@ -14,6 +14,7 @@
 
   <script>
     var flFormConfig = {
+      load: '/path/to/myForm.html', // Will be fetched when element is created
       onLoad: function (xdiv) {}, // Called when it is loaded for the first time
       onResponse: function (text, statusCode, xdiv) {}, // Called whenever a response from a submit event arrives
       credentials: false, //If set to true, credentials (cookies) are sent with fetch request
