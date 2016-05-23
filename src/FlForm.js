@@ -13,7 +13,20 @@ export default class FlForm {
     this.setupEventListeners();
 
     // trigger load event
-    this.config.onLoad(xdiv);
+    this.loadInitialContent()
+    .then(() => {
+      this.config.onLoad(xdiv);
+    });
+  }
+
+  loadInitialContent(config = this.config) {
+    const url = typeof config.load === 'string' ? config.load : undefined;
+
+    if (!url) { return Promise.resolve(); }
+
+    return this.sendRequest(url, 'get')
+    .then(res => this.processFormResponse(res))
+    .catch(err => assert.warn(false, err));
   }
 
   /**
@@ -23,7 +36,7 @@ export default class FlForm {
    * 												when the form submission response arrive
    * 												or with null if there is no submission URL.
    */
-  submitForm(form, config = this.config) {
+  submitForm(form) {
     // Check that a valid element triggered the submit event.
     assert(form.tagName === 'FORM', 'Submit event was fired without a form element.');
 
@@ -33,19 +46,8 @@ export default class FlForm {
     // Prepare request options
     const method = form.getAttribute('method') || 'GET';
     const body = method.toUpperCase() === 'POST' ? new FormData(form) : undefined;
-    const headers = new Headers({ 'X-Requested-With': 'fetch' });
 
-    const fetchOptions = {
-      method,
-      body,
-      headers,
-      cache: 'default',
-      mode: config.mode,
-      credentials: config.credentials,
-    };
-
-    // Send request
-    return fetch(url, fetchOptions);
+    return this.sendRequest(url, method, body);
   }
 
   processFormResponse(response, status) {
@@ -96,5 +98,21 @@ export default class FlForm {
 
   renderContent(content, xdiv = this.xdiv) {
     xdiv.innerHTML = content;
+  }
+
+  sendRequest(url, method, body, config = this.config) {
+    // Prepare request options
+    const headers = new Headers({ 'X-Requested-With': 'fetch' });
+    const fetchOptions = {
+      method,
+      body,
+      headers,
+      cache: 'default',
+      mode: config.mode,
+      credentials: config.credentials,
+    };
+
+    // Send request
+    return fetch(url, fetchOptions);
   }
 }
