@@ -1,6 +1,6 @@
 {
   "name": "fl-form",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "An encapsulated form component",
   "main": "dist/fl-form.js",
   "scripts": {
