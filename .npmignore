@@ -1,0 +1,10 @@
+/**/node_modules/
+/.git/
+/**/bower_components/
+/**/.grunt/
+/src/
+/demo/
+/tests/
+.*
+Gruntfile.js
+_*
