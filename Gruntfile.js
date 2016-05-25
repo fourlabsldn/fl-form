@@ -7,11 +7,11 @@ module.exports = function (grunt) {
   grunt.initConfig({
     jasmine: {
       pivotal: {
-        src: ['tests/eee.*'],
         options: {
-          specs: 'tests/*eee.js',
-        },
-      },
+          polyfills: ['tests/helpers/promise-polyfill.js'],
+          specs: 'tests/build/FlForm_Specs.js'
+        }
+      }
     },
     'http-server': {
       dev: {
@@ -22,42 +22,46 @@ module.exports = function (grunt) {
         ext: 'html',
         runInBackground: true,
         customPages: {
-          '/readme': 'README.md',
-        },
-      },
+          '/readme': 'README.md'
+        }
+      }
     },
     watch: {
       js: {
         files: 'src/**/*.js',
         tasks: ['rollup'],
         options: {
-          livereload: true,
-        },
-      },
+          livereload: true
+        }
+      }
     },
     open: {
       demo: {
         path: `http://localhost:${serverPort}/demo/index.html`,
-        app: 'google-chrome',
-      },
+        app: 'google-chrome'
+      }
     },
     rollup: {
       options: {
         banner: '"use strict";\n',
-        plugins: function () {
+        plugins: () => {
           return [
             babel({
               exclude: './node_modules/**',
-              presets: ['es2015-rollup'],
-            }),
+              presets: ['es2015-rollup']
+            })
           ];
-        },
+        }
       },
       main: {
         src: 'src/controller.js', // Only one source file is permitted
-        dest: 'dist/fl-form.js',
+        dest: 'dist/fl-form.js'
       },
-    },
+      tests: {
+        src: 'tests/src/FlForm_Specs.js', // Only one source file is permitted
+        dest: 'tests/build/FlForm_Specs.js'
+      }
+    }
   });
 
   grunt.loadNpmTasks('grunt-rollup');
@@ -67,7 +71,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-open');
 
   grunt.registerTask('default', []);
-  grunt.registerTask('test', ['jasmine']);
+  grunt.registerTask('test', ['rollup', 'jasmine']);
   grunt.registerTask('dev', ['rollup', 'open', 'http-server', 'watch']);
   grunt.registerTask('demo', ['dev']);
 };
