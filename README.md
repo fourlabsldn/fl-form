@@ -1,6 +1,6 @@
 # fl-form
 
-[**See it in action online**](fourlabsldn.github.io/fl-form/demo/index.html)
+[**See it in action online**](https://fourlabsldn.github.io/fl-form/demo/index.html)
 
 ## Goals of fl-form
 - Send a form and receive response without reloading the page.
