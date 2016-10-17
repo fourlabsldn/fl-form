@@ -49,40 +49,40 @@
     var config2 = {};
 
     var config3 = {
-      load: '/demo/form4.html'
+      load: './form4.html'
     };
   </script>
 
   <h1>fl-form test</h1>
-  <x-div name='form' data-controller="/dist/fl-form" data-config="config1">
+  <x-div name='form' data-controller="../dist/fl-form" data-config="config1">
     <form action="dummyContent1.html">
       <button>Load something else</button>
     </form>
     <p>Form with content loaded via onLoad event. There should be more content here >></p>
   </x-div>
 
-  <x-div name='form' data-controller="/dist/fl-form" data-config="config2">
+  <x-div name='form' data-controller="../dist/fl-form" data-config="config2">
     <form>
       <button>Load something</button>
     </form>
     <p>Form without a target</p>
   </x-div>
 
-  <x-div name='form' data-controller="/dist/fl-form">
+  <x-div name='form' data-controller="../dist/fl-form">
     <form action="dummyContent1.html">
       <button>Submit</button>
     </form>
     <p>Form without a config</p>
   </x-div>
 
-  <x-div name='form' data-controller="/dist/fl-form" data-config="config3">
+  <x-div name='form' data-controller="../dist/fl-form" data-config="config3">
     <p>This one should load inital content</p>
   </x-div>
 
-  <x-div name='form' data-controller="/dist/fl-form">
+  <x-div name='form' data-controller="../dist/fl-form">
     <p>Form with deep links</p>
 
-    <form action="http://localhost:5000/demo/form2.html" method="GET" >
+    <form action="./form2.html" method="GET" >
       <input type="text" name="name">
       <input type="text" name="surname">
       <input type="text" name="address">
@@ -98,9 +98,6 @@
     Unrelated content that should not be taken from the page.
     <img src="https://placehold.it/200x200" alt="">
   </div>
-  <script src="../node_modules/x-div/dist/x-div.js"></script>
-
-  <!-- livereload -->
-  <script src="//localhost:35729/livereload.js"></script>
+  <script src="./dependencies/x-div.js"></script>
 </body>
 </html>

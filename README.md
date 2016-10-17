@@ -1,4 +1,7 @@
 # fl-form
+
+[**See it in action online**](fourlabsldn.github.io/fl-form/demo/index.html)
+
 ## Goals of fl-form
 - Send a form and receive response without reloading the page.
 - Be able to intercept a form submission.

@@ -47,6 +47,11 @@ module.exports = function (grunt) {
         plugins: () => {
           return [
             babel({
+              // Function names leak to the global namespace. To avoid that,
+              // let's just put everything within an immediate function, this way variables
+              // are all beautifully namespaced.
+              banner: '(function () {',
+              footer: '}());',
               exclude: './node_modules/**',
               presets: ['es2015-rollup']
             })
